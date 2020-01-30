@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: no.nordicsemi.android:ble:2.1.1@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7beb417fe47ad78e13e77e39bc0ebee9/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7beb417fe47ad78e13e77e39bc0ebee9/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7beb417fe47ad78e13e77e39bc0ebee9/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/no.nordicsemi.android/ble/2.1.1/d2b6ae447bc56c252ac17cf4e71726989546a680/ble-2.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
