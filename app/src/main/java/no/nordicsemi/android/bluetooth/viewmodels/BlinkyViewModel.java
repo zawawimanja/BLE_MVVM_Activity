@@ -240,16 +240,7 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 
 	@Override
 	public void onRXChanged(@NonNull final BluetoothDevice device, final String dataReceived) {
-//		if(dataReceived.contains("XAJJJ")){
-//
-//
-//			mRXState.postValue(" JJJ");
-//		}
-//		else if(dataReceived.contains("XBSUCCESS1")){
-//
-//
-//			mRXState.postValue("SUCCESS1");
-//		}
+
 
 		mRXState.postValue(dataReceived);
 
@@ -269,7 +260,7 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 		mBlinkyManager.insert(word);
 	}
 
-    public void toggleLED(final String  isOn) {
+    public void sendData(final String  isOn) {
         mBlinkyManager.send(isOn);
 
     }

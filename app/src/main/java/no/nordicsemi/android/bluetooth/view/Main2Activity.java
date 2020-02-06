@@ -112,7 +112,7 @@ public class Main2Activity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.toggleLED(sender);
+                mViewModel.sendData(sender);
             }
         });
 
@@ -136,6 +136,15 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
 
+
+                if(s.contains("KKK")){
+
+                    mEditWordView.setText(" ");
+                    mEditWordView1.setText(s);
+                }
+                else {
+                    mEditWordView.setText(s);
+                }
 
 
                 Log.i(TAG,"Received Message"+s);

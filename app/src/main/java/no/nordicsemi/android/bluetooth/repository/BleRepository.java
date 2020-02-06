@@ -235,7 +235,7 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
             request.enqueue();
         }
     }
-    
+
 
     public LiveData<List<BleEntity>> getAllBleEntitys() {
         return mAllBleEntitys;

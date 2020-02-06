@@ -75,28 +75,25 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Device"+device);
 
 
-
+        delete = findViewById(R.id.delete);
         text=findViewById(R.id.text);
         btn=findViewById(R.id.btn);
         send=findViewById(R.id.send);
         display = findViewById(R.id.display);
+        mEditWordView = findViewById(R.id.edit_word);
+        mEditWordView1 = findViewById(R.id.edit_word1);
+        int id = -1 ;
 
-        delete = findViewById(R.id.delete);
+
         // Configure the view model
-        //    mViewModel = ViewModelProviders.of(this).get(BlinkyViewModel.class);
         mViewModel = ViewModelProviders.of(this,viewModelFactory).get(BlinkyViewModel.class);
         mViewModel.connect(device);
-
-
 
         mViewModel.getAllWords().observe(this, new Observer<List<BleEntity>>() {
             @Override
             public void onChanged(List<BleEntity> bleEntities) {
                 //  adapter.setWords(words);
                 Log.i(TAG,bleEntities+"Bleentity");
-
-
-
 
 
                 setTextViewFromList(bleEntities,display);
@@ -112,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModel.toggleLED(sender);
+                mViewModel.sendData(sender);
                 Button btn = (Button)view;
                 String buttonText = btn.getText().toString();
                 Log.i(TAG,"send "+buttonText);
@@ -139,15 +136,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
 
-                mEditWordView1.setText(s);
+
+
+
+                if(s.contains("KKK")){
+
+                    mEditWordView.setText(" ");
+                    mEditWordView1.setText(s);
+                }
+                else {
+                    mEditWordView.setText(s);
+                }
+
+
+
+
+
 
                 Log.i(TAG,"Received Message"+s);
             }
         });
 
-        mEditWordView = findViewById(R.id.edit_word);
-        mEditWordView1 = findViewById(R.id.edit_word1);
-        int id = -1 ;
+
 
         mEditWordView1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -189,9 +199,6 @@ public class MainActivity extends AppCompatActivity {
 
 //
 //                    // Get the new word that the user entered.
-
-
-
                     BleEntity word = new BleEntity(mEditWordView1.getText().toString());
                     // Save the data.
 
