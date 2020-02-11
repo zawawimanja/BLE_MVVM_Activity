@@ -43,6 +43,7 @@ public abstract class BleRoomDatabase extends RoomDatabase {
 
     private static BleRoomDatabase INSTANCE;
 
+    //singleton
     public static BleRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (BleRoomDatabase.class) {

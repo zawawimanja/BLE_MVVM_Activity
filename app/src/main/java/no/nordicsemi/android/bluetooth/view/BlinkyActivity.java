@@ -128,7 +128,7 @@ public class BlinkyActivity extends AppCompatActivity {
 		final View content = findViewById(R.id.device_container);
 		final View notSupported = findViewById(R.id.not_supported);
 
-		mLed.setOnCheckedChangeListener((buttonView, isChecked) -> mViewModel.toggleLED("awi"));
+
 
 
 		mViewModel.isDeviceReady().observe(this, deviceReady -> {
@@ -179,7 +179,7 @@ public class BlinkyActivity extends AppCompatActivity {
 		mActivityToolbar.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mViewModel.toggleLED("XAO");
+				mViewModel.sendData("XAO");
 				final Intent controlBlinkIntent = new Intent(getApplicationContext(), MainActivity.class);
 				controlBlinkIntent.putExtra(EXTRA_DEVICE, device);
 				startActivity(controlBlinkIntent);
@@ -190,7 +190,7 @@ public class BlinkyActivity extends AppCompatActivity {
 		mActivityToolbar2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mViewModel.toggleLED("XAO");
+				mViewModel.sendData("YAO");
 				final Intent controlBlinkIntent = new Intent(getApplicationContext(), Main2Activity.class);
 				controlBlinkIntent.putExtra(EXTRA_DEVICE, device);
 				startActivity(controlBlinkIntent);
