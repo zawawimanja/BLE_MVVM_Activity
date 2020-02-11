@@ -132,9 +132,10 @@ public class Main2Activity extends AppCompatActivity {
 
 
         //receive
-        mViewModel.getRXState().observe(this, new Observer<String>() {
+        mViewModel.getReceive2().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+
 
 
                 if(s.contains("KKK")){
@@ -142,12 +143,17 @@ public class Main2Activity extends AppCompatActivity {
                     mEditWordView.setText(" ");
                     mEditWordView1.setText(s);
                 }
+                else if(s.contains("JJJ")){
+
+                    mEditWordView.setText(" ");
+                    mEditWordView1.setText(" ");
+                }
                 else {
                     mEditWordView.setText(s);
                 }
 
 
-                Log.i(TAG,"Received Message"+s);
+                Log.i(TAG,"Received MessageMain2"+s);
             }
         });
 
@@ -236,6 +242,8 @@ public class Main2Activity extends AppCompatActivity {
         }else{
             text.setText("Connected");
         }
+
+        Log.i(TAG,"Main2Activity"+connected);
 
 
     }

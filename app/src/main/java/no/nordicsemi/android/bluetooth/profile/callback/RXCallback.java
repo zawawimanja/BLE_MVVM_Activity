@@ -38,5 +38,5 @@ public interface RXCallback {
 
     void onRXChanged(@NonNull final BluetoothDevice device, final String dataReceived);
 
-
+    void onReceive2(@NonNull final BluetoothDevice device, final String dataReceived);
 }

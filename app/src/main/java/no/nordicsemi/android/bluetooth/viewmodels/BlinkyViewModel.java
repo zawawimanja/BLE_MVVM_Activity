@@ -40,6 +40,7 @@ import javax.inject.Inject;
 
 import no.nordicsemi.android.bluetooth.R;
 import no.nordicsemi.android.bluetooth.adapter.DiscoveredBluetoothDevice;
+import no.nordicsemi.android.bluetooth.data.local.database.BleRoomDatabase;
 import no.nordicsemi.android.bluetooth.data.local.entity.BleEntity;
 
 import no.nordicsemi.android.bluetooth.profile.BlinkyManagerCallbacks;
@@ -84,6 +85,9 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 	// Flag to determine  prepare to send message
 	private final MutableLiveData<String> mRXState = new MutableLiveData<>();
 
+	// Flag to determine  prepare to send message
+	private final MutableLiveData<String> mReceive2 = new MutableLiveData<>();
+
 
 	public LiveData<Void> isDeviceReady() {
 		return mOnDeviceReady;
@@ -101,6 +105,10 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 		return mRXState;
 	}
 
+	public LiveData<String> getReceive2() {
+		return mReceive2;
+	}
+
 	public LiveData<String> getTXState() {
 		return mTXState;
 	}
@@ -115,11 +123,13 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 		super(application);
 
 		// Initialize the manager as singleton
-	//	mBlinkyManager =  BleRepository.getBlinkyManager(getApplication());
-	mBlinkyManager = new BleRepository(getApplication());
+		//connection will lost
+		//mBlinkyManager = BleRepository.getInstance(getApplication());
+	   mBlinkyManager = new BleRepository(getApplication());
+
+
 		mBlinkyManager.setGattCallbacks(this);
 		mAllWords = 	mBlinkyManager.getAllBleEntitys();
-		//mRepository = new	mBlinkyManager BleRepository(application);
 
 		//mAllWords = mRepository.getAllBleEntitys();
 	}
@@ -238,12 +248,23 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 		mIsSupported.postValue(false);
 	}
 
+
+	//receive
 	@Override
 	public void onRXChanged(@NonNull final BluetoothDevice device, final String dataReceived) {
 
 
 		mRXState.postValue(dataReceived);
 
+
+	}
+
+	//receive
+	@Override
+	public void onReceive2(@NonNull final BluetoothDevice device, final String dataReceived) {
+
+
+		mReceive2.postValue(dataReceived);
 
 	}
 
@@ -261,9 +282,10 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 	}
 
     public void sendData(final String  isOn) {
-        mBlinkyManager.send(isOn);
+		mBlinkyManager.send(isOn);
 
-    }
+	}
+
 
     public void deleteAll() {
 		mBlinkyManager.deleteAll();

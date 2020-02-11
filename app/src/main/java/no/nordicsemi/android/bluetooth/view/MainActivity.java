@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Editable;
@@ -138,22 +139,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-                if(s.contains("KKK")){
+                if(s.contains("JJJ")){
 
                     mEditWordView.setText(" ");
                     mEditWordView1.setText(s);
+                }
+                else if(s.contains("KKK")){
+
+                    mEditWordView.setText(" ");
+                    mEditWordView1.setText(" ");
                 }
                 else {
                     mEditWordView.setText(s);
                 }
 
 
-
-
-
-
-                Log.i(TAG,"Received Message"+s);
+                Log.i(TAG,"Received MessageMain"+s);
             }
         });
 
@@ -260,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             text.setText("Connected");
         }
+        Log.i(TAG,"MainActivity"+connected);
     }
 
 

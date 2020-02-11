@@ -17,9 +17,11 @@
 package no.nordicsemi.android.bluetooth.repository;
 
 import android.app.Application;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,6 +45,8 @@ import no.nordicsemi.android.bluetooth.profile.BlinkyManagerCallbacks;
 import no.nordicsemi.android.log.LogContract;
 import no.nordicsemi.android.log.LogSession;
 import no.nordicsemi.android.log.Logger;
+
+import static no.nordicsemi.android.bluetooth.BlinkyApplication.getAppContext;
 
 
 /**
@@ -77,9 +81,11 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
     private BluetoothGattCharacteristic mRXCharacteristic, mTXCharacteristic;
     private boolean mUseLongWrite = true;
     public static final String TAG="BleRepository";
+    BleRoomDatabase mDatabase;
+    private static  BleRepository sInstance;
 
 
-    @Singleton
+
     public BleRepository(Application application) {
         super(application);
         BleRoomDatabase db = BleRoomDatabase.getDatabase(application);
@@ -88,14 +94,19 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
     }
 
 
-    /** singleton object */
-    public static synchronized BleRepository getBlinkyManager(final Application application) {
-        if (managerInstance == null) {
-            managerInstance = new BleRepository(application);
-        }
-        return managerInstance;
-    }
 
+    /** singleton object */
+    //try to use singleton but connection lost everytime navigate to new activity
+    public static BleRepository getInstance(final Application database) {
+        if (sInstance == null) {
+            synchronized (BleRepository.class) {
+                if (sInstance == null) {
+                    sInstance = new BleRepository(database);
+                }
+            }
+        }
+        return sInstance;
+    }
 
 
 
@@ -130,6 +141,8 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
      * receiving indication, etc.
      */
 
+    //receiving data
+
     private final BleManagerGattCallback mGattCallback = new BleManagerGattCallback() {
         @Override
         protected void initialize() {
@@ -142,23 +155,9 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
                 //transfer data received to activity
             //  mCallbacks.onRXChanged(device, text);
 
-                if(text.contains("XAJJJ")){
 
-                    mCallbacks.onRXChanged(device," JJJ");
-                }
-                else if(text.contains("XBSUCCESS1")){
-
-                    mCallbacks.onRXChanged(device, "SUCCESS1");
-                }
-                else if(text.contains("YAKKK")){
-
-                    mCallbacks.onRXChanged(device," KKK");
-                }
-                else if(text.contains("YBSUCCESS2")){
-
-                    mCallbacks.onRXChanged(device,"SUCCESS2");
-                }
-
+               receive1(device);
+               receive2(device);
 
 
 
@@ -205,12 +204,42 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
     };
 
 
+    public void receive1(BluetoothDevice device){
+
+        if(text.contains("XAJJJ")){
+
+            mCallbacks.onRXChanged( device," JJJ");
+        }
+        else if(text.contains("XBSUCCESS1")){
+
+            mCallbacks.onRXChanged( device , "SUCCESS1");
+        }
+
+    }
+
+    public void receive2(BluetoothDevice device){
+
+        if(text.contains("YAKKK")){
+
+            mCallbacks.onReceive2(device," KKK");
+        }
+        else if(text.contains("YBSUCCESS2")){
+
+            mCallbacks.onReceive2(device,"SUCCESS2");
+        }
+
+
+    }
+
+
+
 
 
     /**
      * Sends the given text to TX characteristic.
      * @param text the text to be sent
      */
+    //sending data
     public void send(final String text) {
 
         // Are we connected?
@@ -328,4 +357,8 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
             return null;
         }
     }
+
+
+
+
 }
