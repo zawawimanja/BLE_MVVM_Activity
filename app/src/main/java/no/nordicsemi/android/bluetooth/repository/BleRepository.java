@@ -46,7 +46,6 @@ import no.nordicsemi.android.log.LogContract;
 import no.nordicsemi.android.log.LogSession;
 import no.nordicsemi.android.log.Logger;
 
-import static no.nordicsemi.android.bluetooth.BlinkyApplication.getAppContext;
 
 
 /**
@@ -83,7 +82,7 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
     public static final String TAG="BleRepository";
     BleRoomDatabase mDatabase;
     private static  BleRepository sInstance;
-
+    int activity;
 
 
     public BleRepository(Application application) {
@@ -156,8 +155,15 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
             //  mCallbacks.onRXChanged(device, text);
 
 
-               receive1(device);
-               receive2(device);
+                //to make sure only selected activity will trigger it
+               if(getActivity()==1){
+                    receive1(device);
+               }
+               else if (getActivity()==2){
+                   receive2(device);
+               }
+
+
 
 
 
@@ -204,15 +210,30 @@ public class BleRepository extends BleManager<BlinkyManagerCallbacks> {
     };
 
 
+    public void setActivity(int data){
+
+
+        activity=data;
+
+    }
+
+    public int getActivity(){
+
+        return activity;
+
+    }
+
+
+
     public void receive1(BluetoothDevice device){
 
         if(text.contains("XAJJJ")){
 
-            mCallbacks.onRXChanged( device," JJJ");
+            mCallbacks.onReceive1( device," JJJ");
         }
         else if(text.contains("XBSUCCESS1")){
 
-            mCallbacks.onRXChanged( device , "SUCCESS1");
+            mCallbacks.onReceive1( device , "SUCCESS1");
         }
 
     }

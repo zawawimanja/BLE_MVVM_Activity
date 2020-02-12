@@ -12,8 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.Main4Activity"></activity>
-        <activity android:name=".view.Main3Activity" />
         <activity android:name=".view.Main2Activity" />
         <activity android:name=".view.MainActivity" /> <!-- android:name=".SplashScreenActivity" -->
         <!-- android:theme="@style/AppTheme.SplashScreen" -->

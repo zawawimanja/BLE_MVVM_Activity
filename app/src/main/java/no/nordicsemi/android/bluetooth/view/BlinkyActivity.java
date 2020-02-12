@@ -60,7 +60,7 @@ public class BlinkyActivity extends AppCompatActivity {
 	public static final String EXTRA_DEVICE = "no.nordicsemi.android.blinky.EXTRA_DEVICE";
 	private BlinkyViewModel mViewModel;
 
-	@BindView(R.id.led_switch) Switch mLed;
+
 	@BindView(R.id.button_state) TextView mButtonState;
 	@BindView(R.id.activity_tool_bar) Toolbar mActivityToolbar;
 	@BindView(R.id.activity_tool_bar2) Toolbar mActivityToolbar2;
@@ -122,7 +122,7 @@ public class BlinkyActivity extends AppCompatActivity {
 		mViewModel.connect(device);
 
 		// Set up views
-		final TextView ledState = findViewById(R.id.led_state);
+
 		final LinearLayout progressContainer = findViewById(R.id.progress_container);
 		final TextView connectionState = findViewById(R.id.connection_state);
 		final View content = findViewById(R.id.device_container);
@@ -156,26 +156,6 @@ public class BlinkyActivity extends AppCompatActivity {
 			}
 		});
 
-
-
-		mViewModel.getTXState().observe(this, new Observer<String>() {
-			@Override
-			public void onChanged(String s) {
-
-				ledState.setText(s);
-			}
-		});
-
-
-		mViewModel.getRXState().observe(this, new Observer<String>() {
-			@Override
-			public void onChanged(String s) {
-				mButtonState.setText(s);
-				Log.i(TAG,"State"+s);
-			}
-		});
-
-
 		mActivityToolbar.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -198,27 +178,6 @@ public class BlinkyActivity extends AppCompatActivity {
 		});
 
 
-		mActivityToolbar3.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				final Intent controlBlinkIntent = new Intent(getApplicationContext(), Main3Activity.class);
-				controlBlinkIntent.putExtra(EXTRA_DEVICE, device);
-				startActivity(controlBlinkIntent);
-			}
-		});
-
-
-		mActivityToolbar4.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				final Intent controlBlinkIntent = new Intent(BlinkyActivity.this, Main4Activity.class);
-				controlBlinkIntent.putExtra(EXTRA_DEVICE, device);
-				startActivity(controlBlinkIntent);
-			}
-		});
-
-
-
 	}
 
 	@OnClick(R.id.action_clear_cache)
@@ -227,11 +186,14 @@ public class BlinkyActivity extends AppCompatActivity {
 	}
 
 	private void onConnectionStateChanged(final boolean connected) {
-		mLed.setEnabled(connected);
+
 		if (!connected) {
-			mLed.setChecked(false);
-			mButtonState.setText("Not connected");
+
+			mButtonState.setText("Not Connected");
+		}else{
+			mButtonState.setText("Connected");
 		}
+		Log.i(TAG,"BlinkyActivity"+connected);
 	}
 
 

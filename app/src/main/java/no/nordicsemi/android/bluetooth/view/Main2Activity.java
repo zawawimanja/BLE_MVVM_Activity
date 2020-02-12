@@ -119,6 +119,8 @@ public class Main2Activity extends AppCompatActivity {
 
         mViewModel.isConnected().observe(this, this::onConnectionStateChanged);
 
+        mViewModel.setActivity(2);
+
 
         mViewModel.getTXState().observe(this, new Observer<String>() {
             @Override
