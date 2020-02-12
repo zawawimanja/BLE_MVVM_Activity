@@ -101,7 +101,7 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 		return mIsConnected;
 	}
 
-	public LiveData<String> getRXState() {
+	public LiveData<String> getReceive1() {
 		return mRXState;
 	}
 
@@ -251,7 +251,7 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 
 	//receive
 	@Override
-	public void onRXChanged(@NonNull final BluetoothDevice device, final String dataReceived) {
+	public void onReceive1(@NonNull final BluetoothDevice device, final String dataReceived) {
 
 
 		mRXState.postValue(dataReceived);
@@ -283,6 +283,11 @@ public class BlinkyViewModel extends AndroidViewModel implements BlinkyManagerCa
 
     public void sendData(final String  isOn) {
 		mBlinkyManager.send(isOn);
+
+	}
+
+	public void setActivity(int isOn) {
+		mBlinkyManager.setActivity(isOn);
 
 	}
 

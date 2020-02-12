@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         /*
          * Step 2: Remember in our ActivityModule, we
          * defined MainActivity injection? So we need
@@ -83,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         display = findViewById(R.id.display);
         mEditWordView = findViewById(R.id.edit_word);
         mEditWordView1 = findViewById(R.id.edit_word1);
-        int id = -1 ;
-
 
         // Configure the view model
         mViewModel = ViewModelProviders.of(this,viewModelFactory).get(BlinkyViewModel.class);
@@ -95,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<BleEntity> bleEntities) {
                 //  adapter.setWords(words);
                 Log.i(TAG,bleEntities+"Bleentity");
-
 
                 setTextViewFromList(bleEntities,display);
                // setTextViewFromReceive(bleEntities,display1);
@@ -121,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
         mViewModel.isConnected().observe(this, this::onConnectionStateChanged);
 
 
+        //trigger repo receiving method
+        mViewModel.setActivity(1);
+
+
+
+        //display what has been send
         mViewModel.getTXState().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -133,25 +135,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         //receive
-        mViewModel.getRXState().observe(this, new Observer<String>() {
+        mViewModel.getReceive1().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
 
-
-
-                if(s.contains("JJJ")){
-
-                    mEditWordView.setText(" ");
-                    mEditWordView1.setText(s);
-                }
-                else if(s.contains("KKK")){
-
-                    mEditWordView.setText(" ");
-                    mEditWordView1.setText(" ");
-                }
-                else {
-                    mEditWordView.setText(s);
-                }
+//                if(s.contains("JJJ")){
+//
+//                    mEditWordView.setText(" ");
+//                    mEditWordView1.setText(s);
+//                }
+//                else {
+//                    mEditWordView.setText(s);
+//                    mEditWordView1.setText(s);
+//                }
+                mEditWordView.setText(s);
+                mEditWordView1.setText(s);
 
 
                 Log.i(TAG,"Received MessageMain"+s);

@@ -2,9 +2,7 @@ package no.nordicsemi.android.bluetooth;
 
 import android.app.Activity;
 import android.app.Application;
-
 import javax.inject.Inject;
-
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import no.nordicsemi.android.bluetooth.di.component.DaggerAppComponent;
